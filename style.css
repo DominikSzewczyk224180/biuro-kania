@@ -91,11 +91,10 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
   position: absolute;
   top: 100px; right: 8vw;
   z-index: 2;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
   animation: fadeUp .8s .4s cubic-bezier(.22,1,.36,1) both;
 }
 .hero-kidp-logo {
-  width: 140px; height: auto;
+  width: 130px; height: auto;
   opacity: .75;
   transition: opacity .3s;
 }
@@ -107,7 +106,7 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
 
 .hero-content {
   flex: 1;
-  max-width: 700px; position: relative; z-index: 1;
+  max-width: 780px; position: relative; z-index: 1;
   animation: fadeUp .9s cubic-bezier(.22,1,.36,1) both;
 }
 
@@ -125,9 +124,10 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
 
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(3.6rem, 6.5vw, 6rem);
+  font-size: clamp(3rem, 5.2vw, 5.2rem);
   font-weight: 700; color: var(--white);
   line-height: 1.05; margin-bottom: 16px;
+  white-space: nowrap;
 }
 h1 em { font-style: normal; color: var(--gold); }
 
