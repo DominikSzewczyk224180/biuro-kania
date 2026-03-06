@@ -170,7 +170,7 @@ h1 em { font-style: normal; color: var(--gold); }
 .hero-quote-block {
   position: relative; z-index: 1;
   flex-shrink: 0;
-  width: 300px;
+  width: 480px;
   display: flex; flex-direction: column; align-items: center;
   justify-content: flex-end;
   text-align: center;
@@ -310,7 +310,21 @@ h2 {
   font-size: 2.2rem; font-weight: 700;
   color: var(--gold); line-height: 1; margin-bottom: 8px;
 }
-.stat-label {
+.stat-box--kidp {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+}
+.kidp-logo {
+  width: 100%; max-width: 130px;
+  height: auto;
+  opacity: .9;
+  filter: brightness(10) invert(0);
+  mix-blend-mode: screen;
+  transition: opacity .3s;
+}
+.stat-box--kidp:hover .kidp-logo { opacity: 1; }
+
+
   font-size: .75rem; color: rgba(255,255,255,.38);
   text-transform: uppercase; letter-spacing: .13em;
 }
