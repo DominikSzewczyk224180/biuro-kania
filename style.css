@@ -318,10 +318,9 @@ h2 {
   width: 100%; max-width: 130px;
   height: auto;
   opacity: .9;
-  filter: brightness(10) invert(0);
-  mix-blend-mode: screen;
   transition: opacity .3s;
 }
+.stat-box--kidp:hover .kidp-logo { opacity: 1; }
 .stat-box--kidp:hover .kidp-logo { opacity: 1; }
 
 
