@@ -43,19 +43,25 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.4); }
 
 .nav-brand {
   display: flex; flex-direction: column; gap: 2px;
+  text-decoration: none;
+  cursor: pointer;
 }
 .nav-brand strong {
   font-family: 'Playfair Display', serif;
   font-size: 1.05rem;
   color: var(--white);
   letter-spacing: .03em;
+  transition: color .25s;
 }
 .nav-brand span {
   font-size: .68rem;
   color: var(--gold);
   letter-spacing: .16em;
   text-transform: uppercase;
+  transition: opacity .25s;
 }
+.nav-brand:hover strong { color: var(--gold); }
+.nav-brand:hover span  { opacity: .7; }
 
 .nav-links {
   display: flex; gap: 2.5rem; list-style: none;
@@ -192,6 +198,41 @@ h1 em { font-style: normal; color: var(--gold); }
   line-height: 1.4;
   text-transform: uppercase;
   letter-spacing: .1em;
+}
+
+.hero-quote {
+  position: relative;
+  margin-bottom: 36px;
+  padding: 20px 24px 20px 32px;
+  border-left: 2px solid var(--gold);
+  background: rgba(200,168,75,.05);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: rgba(255,255,255,.65);
+  line-height: 1.6;
+  max-width: 480px;
+}
+.quote-mark {
+  position: absolute;
+  top: -8px; left: 14px;
+  font-size: 3.5rem;
+  color: var(--gold);
+  opacity: .3;
+  line-height: 1;
+  font-family: 'Playfair Display', serif;
+  pointer-events: none;
+}
+.quote-author {
+  display: block;
+  margin-top: 10px;
+  font-size: .75rem;
+  font-style: normal;
+  font-family: 'Source Sans 3', sans-serif;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: .7;
 }
 
 .hero-cta {
