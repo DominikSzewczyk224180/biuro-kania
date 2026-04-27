@@ -76,7 +76,7 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
   gap: 80px;
   background: var(--navy);
   position: relative; overflow: hidden;
-  padding: 100px 8vw 80px;
+  padding: 90px 8vw 80px;
 }
 
 .hero-bg { position: absolute; inset: 0; pointer-events: none; }
@@ -90,10 +90,10 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
-/* Logo KIDP — większe, blisko napisu Biuro */
+/* Logo KIDP — minimalna przerwa */
 .hero-kidp-corner {
   display: flex; align-items: center; gap: 18px;
-  margin-bottom: 4px;
+  margin-bottom: 0;
   animation: fadeUp .8s .1s cubic-bezier(.22,1,.36,1) both;
 }
 .hero-kidp-logo {
@@ -415,11 +415,11 @@ footer strong { color: rgba(255,255,255,.46); }
   footer { flex-direction: column; text-align: center; }
   h1 { white-space: normal; }
   .hero-kidp-text { font-size: .7rem; }
-  #hero { padding: 90px 8vw 60px; }
+  #hero { padding: 80px 8vw 60px; }
 }
 @media (max-width: 500px) {
-  #hero { padding: 90px 6vw 60px; }
-  .hero-kidp-corner { gap: 12px; margin-bottom: 4px; }
+  #hero { padding: 80px 6vw 60px; }
+  .hero-kidp-corner { gap: 12px; margin-bottom: 0; }
   .hero-kidp-logo { height: 90px; }
   .hero-kidp-divider { height: 40px; }
   .hero-since { padding: 12px 20px; }
