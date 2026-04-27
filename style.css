@@ -76,7 +76,7 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
   gap: 80px;
   background: var(--navy);
   position: relative; overflow: hidden;
-  padding: 90px 8vw 60px;
+  padding: 160px 8vw 80px;
 }
 
 .hero-bg { position: absolute; inset: 0; pointer-events: none; }
@@ -90,23 +90,23 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
-/* Logo KIDP — w przepływie, nad h1, skalowanie razem z nagłówkiem */
+/* Logo KIDP — większe, bliżej napisu Biuro, niżej od góry */
 .hero-kidp-corner {
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 18px;
+  margin-bottom: 4px;
   animation: fadeUp .8s .1s cubic-bezier(.22,1,.36,1) both;
 }
 .hero-kidp-logo {
-  height: clamp(80px, 9vw, 140px); width: auto;
-  opacity: .85; transition: opacity .3s;
+  height: clamp(110px, 12vw, 180px); width: auto;
+  opacity: .9; transition: opacity .3s;
 }
 .hero-kidp-logo:hover { opacity: 1; }
 .hero-kidp-divider {
-  width: 1px; height: clamp(36px, 4.5vw, 64px);
+  width: 1px; height: clamp(48px, 6vw, 80px);
   background: var(--gold); opacity: .5;
 }
 .hero-kidp-text {
-  font-size: clamp(.7rem, .9vw, .82rem);
+  font-size: clamp(.72rem, .95vw, .85rem);
   font-weight: 600;
   letter-spacing: .18em; text-transform: uppercase;
   color: var(--gold); opacity: .85;
@@ -415,12 +415,13 @@ footer strong { color: rgba(255,255,255,.46); }
   footer { flex-direction: column; text-align: center; }
   h1 { white-space: normal; }
   .hero-kidp-text { font-size: .7rem; }
+  #hero { padding: 130px 8vw 60px; }
 }
 @media (max-width: 500px) {
-  #hero { padding: 90px 6vw 60px; }
-  .hero-kidp-corner { gap: 12px; margin-bottom: 10px; }
-  .hero-kidp-logo { height: 72px; }
-  .hero-kidp-divider { height: 32px; }
+  #hero { padding: 110px 6vw 60px; }
+  .hero-kidp-corner { gap: 12px; margin-bottom: 4px; }
+  .hero-kidp-logo { height: 90px; }
+  .hero-kidp-divider { height: 40px; }
   .hero-since { padding: 12px 20px; }
   .hero-since .year { font-size: 1.8rem; }
   .btn-primary, .btn-ghost { padding: 13px 24px; font-size: .8rem; }
