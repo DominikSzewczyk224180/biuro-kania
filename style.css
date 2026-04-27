@@ -76,7 +76,7 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
   gap: 80px;
   background: var(--navy);
   position: relative; overflow: hidden;
-  padding: 110px 8vw 80px;
+  padding: 90px 8vw 60px;
 }
 
 .hero-bg { position: absolute; inset: 0; pointer-events: none; }
@@ -93,20 +93,20 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
 /* Logo KIDP — w przepływie, nad h1, skalowanie razem z nagłówkiem */
 .hero-kidp-corner {
   display: flex; align-items: center; gap: 16px;
-  margin-bottom: clamp(24px, 3vw, 40px);
+  margin-bottom: 12px;
   animation: fadeUp .8s .1s cubic-bezier(.22,1,.36,1) both;
 }
 .hero-kidp-logo {
-  height: clamp(60px, 7vw, 110px); width: auto;
-  opacity: .8; transition: opacity .3s;
+  height: clamp(80px, 9vw, 140px); width: auto;
+  opacity: .85; transition: opacity .3s;
 }
 .hero-kidp-logo:hover { opacity: 1; }
 .hero-kidp-divider {
-  width: 1px; height: clamp(28px, 3.5vw, 50px);
+  width: 1px; height: clamp(36px, 4.5vw, 64px);
   background: var(--gold); opacity: .5;
 }
 .hero-kidp-text {
-  font-size: clamp(.7rem, .9vw, .8rem);
+  font-size: clamp(.7rem, .9vw, .82rem);
   font-weight: 600;
   letter-spacing: .18em; text-transform: uppercase;
   color: var(--gold); opacity: .85;
@@ -117,17 +117,6 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
   max-width: 780px; position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: flex-start;
   animation: fadeUp .9s cubic-bezier(.22,1,.36,1) both;
-}
-
-.hero-eyebrow {
-  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
-}
-.hero-eyebrow::before {
-  content: ''; display: block; width: 48px; height: 1px; background: var(--gold);
-}
-.hero-eyebrow span {
-  font-size: .82rem; font-weight: 600;
-  letter-spacing: .22em; text-transform: uppercase; color: var(--gold);
 }
 
 h1 {
@@ -428,10 +417,10 @@ footer strong { color: rgba(255,255,255,.46); }
   .hero-kidp-text { font-size: .7rem; }
 }
 @media (max-width: 500px) {
-  #hero { padding: 100px 6vw 60px; }
-  .hero-kidp-corner { gap: 12px; margin-bottom: 24px; }
-  .hero-kidp-logo { height: 50px; }
-  .hero-kidp-divider { height: 24px; }
+  #hero { padding: 90px 6vw 60px; }
+  .hero-kidp-corner { gap: 12px; margin-bottom: 10px; }
+  .hero-kidp-logo { height: 72px; }
+  .hero-kidp-divider { height: 32px; }
   .hero-since { padding: 12px 20px; }
   .hero-since .year { font-size: 1.8rem; }
   .btn-primary, .btn-ghost { padding: 13px 24px; font-size: .8rem; }
