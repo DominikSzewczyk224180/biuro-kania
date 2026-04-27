@@ -224,13 +224,6 @@ h1 em { font-style: normal; color: var(--gold); }
   margin-top: -20px;
 }
 
-.hero-kidp-logo {
-  width: 160px; height: auto;
-  opacity: .85;
-  transition: opacity .3s;
-}
-.hero-kidp-logo:hover { opacity: 1; }
-
 /* ── SECTIONS GENERIC ───────────────────────── */
 section { padding: 100px 5vw; }
 
