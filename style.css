@@ -95,7 +95,7 @@ nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.45); }
   animation: fadeUp .8s .4s cubic-bezier(.22,1,.36,1) both;
 }
 .hero-kidp-logo {
-  height: 80px; width: auto;
+  height: 160px; width: auto;
   opacity: .85;
   transition: opacity .3s;
 }
