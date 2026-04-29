@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Panel administracyjny — Biuro Rachunkowe Dagmara Kania</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0f2340;
+      --navy2: #1a3560;
+      --gold: #c8a84b;
+      --light: #f5f3ee;
+      --white: #fff;
+      --text: #2c2c2c;
+      --muted: #6b6b6b;
+      --danger: #c0392b;
+      --success: #1e8449;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── Login ── */
+    .login-screen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--navy);
+      padding: 20px;
+    }
+    .login-box {
+      background: var(--white);
+      padding: 50px 44px;
+      max-width: 420px; width: 100%;
+      border-top: 4px solid var(--gold);
+    }
+    .login-box h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .login-box p {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 30px;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--navy);
+      padding: 22px 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+      border-bottom: 3px solid var(--gold);
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--white); font-size: 1.3rem;
+    }
+    header h1 small {
+      display: block;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: .68rem; font-weight: 600;
+      color: var(--gold);
+      letter-spacing: .15em; text-transform: uppercase;
+      margin-top: 3px;
+    }
+    .header-actions { display: flex; gap: 10px; }
+
+    /* ── Main ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 5vw 80px;
+    }
+
+    .toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .toolbar h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: var(--navy);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 600; font-size: .85rem;
+      letter-spacing: .05em;
+      border: none; cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--navy);
+    }
+    .btn-primary:hover { background: #d8b85a; }
+    .btn-secondary {
+      background: transparent; color: var(--white);
+      border: 1px solid rgba(255,255,255,.3);
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-ghost {
+      background: transparent; color: var(--navy);
+      border: 1px solid rgba(0,0,0,.15);
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--navy); background: rgba(200,168,75,.08); }
+    .btn-danger {
+      background: transparent; color: var(--danger);
+      border: 1px solid rgba(192,57,43,.3);
+    }
+    .btn-danger:hover { background: var(--danger); color: var(--white); }
+    .btn-sm { padding: 7px 14px; font-size: .78rem; }
+    .btn-block { width: 100%; justify-content: center; }
+
+    /* ── Posts list ── */
+    .posts-list {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .post-item {
+      background: var(--white);
+      padding: 22px 24px;
+      border-left: 3px solid var(--gold);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+    .post-item-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .post-item-meta {
+      display: flex; gap: 14px;
+      font-size: .78rem; color: var(--muted);
+    }
+    .post-item-cat {
+      color: var(--gold); font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      font-size: .68rem;
+    }
+    .post-actions { display: flex; gap: 8px; }
+
+    .empty-state {
+      background: var(--white);
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ── Form ── */
+    .form-section {
+      background: var(--white);
+      padding: 36px;
+      border-top: 3px solid var(--gold);
+      display: none;
+      margin-bottom: 24px;
+    }
+    .form-section.open { display: block; }
+    .form-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--navy);
+      margin-bottom: 20px;
+    }
+    .form-row { margin-bottom: 18px; }
+    .form-row label {
+      display: block;
+      font-size: .8rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 6px;
+      letter-spacing: .03em;
+    }
+    .form-row input, .form-row select, .form-row textarea {
+      width: 100%;
+      padding: 11px 14px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: .95rem;
+      border: 1px solid rgba(0,0,0,.15);
+      background: var(--light);
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-row textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+    .form-actions {
+      display: flex; gap: 10px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,.06);
+    }
+
+    /* ── Notice ── */
+    .notice {
+      background: rgba(200,168,75,.1);
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-size: .9rem; color: var(--text);
+    }
+    .notice strong { color: var(--navy); }
+    .notice code {
+      background: rgba(0,0,0,.06);
+      padding: 1px 6px;
+      font-family: monospace; font-size: .85em;
+    }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--navy);
+      color: var(--white);
+      padding: 14px 22px;
+      font-size: .9rem;
+      border-left: 3px solid var(--gold);
+      z-index: 1000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform .3s, opacity .3s;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-left-color: var(--success); }
+    .toast.error { border-left-color: var(--danger); }
+
+    @media (max-width: 600px) {
+      .post-item { grid-template-columns: 1fr; }
+      .post-actions { justify-content: flex-end; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      header h1 { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ EKRAN LOGOWANIA ══ -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <h1>Panel administracyjny</h1>
+    <p>Biuro Rachunkowe Dagmara Kania</p>
+    <div class="form-row">
+      <label for="login-password">Hasło</label>
+      <input type="password" id="login-password" placeholder="Wprowadź hasło" autofocus />
+    </div>
+    <button class="btn btn-primary btn-block" id="login-btn">Zaloguj się</button>
+    <p style="margin-top: 20px; font-size: .8rem; text-align: center;" id="login-error"></p>
+  </div>
+</div>
+
+<!-- ══ PANEL ══ -->
+<div id="admin-panel" style="display: none;">
+
+  <header>
+    <h1>
+      Panel administracyjny
+      <small>Biuro Rachunkowe Dagmara Kania</small>
+    </h1>
+    <div class="header-actions">
+      <a href="index.html" class="btn btn-secondary" target="_blank">Zobacz stronę ↗</a>
+      <button class="btn btn-secondary" id="logout-btn">Wyloguj</button>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="notice">
+      <strong>Jak to działa:</strong> dodawane wpisy są zapisywane lokalnie w przeglądarce.
+      Aby zmiany były widoczne dla wszystkich odwiedzających stronę, kliknij <strong>„Pobierz news.json"</strong>
+      i przekaż plik osobie technicznej (Dominikowi) — wgra go do repozytorium.
+    </div>
+
+    <div class="toolbar">
+      <h2>Aktualności i ciekawostki</h2>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn btn-ghost" id="export-btn">📥 Pobierz news.json</button>
+        <button class="btn btn-ghost" id="import-btn">📤 Wczytaj news.json</button>
+        <input type="file" id="import-file" accept="application/json" style="display: none;" />
+        <button class="btn btn-primary" id="add-btn">+ Dodaj wpis</button>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <section class="form-section" id="form-section">
+      <h3 id="form-title">Nowy wpis</h3>
+
+      <div class="form-row">
+        <label for="post-category">Kategoria *</label>
+        <select id="post-category">
+          <option value="Ciekawostka">Ciekawostka</option>
+          <option value="Zmiana przepisów">Zmiana przepisów</option>
+          <option value="Ogłoszenie biura">Ogłoszenie biura</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label for="post-title">Tytuł *</label>
+        <input type="text" id="post-title" placeholder="np. Nowe limity podatkowe od 2026" />
+      </div>
+
+      <div class="form-row">
+        <label for="post-date">Data publikacji *</label>
+        <input type="date" id="post-date" />
+      </div>
+
+      <div class="form-row">
+        <label for="post-content">Treść *</label>
+        <textarea id="post-content" placeholder="Pełna treść wpisu — może być długa, klienci klikają „Czytaj więcej" żeby zobaczyć całość."></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" id="save-btn">Zapisz</button>
+        <button class="btn btn-ghost" id="cancel-btn">Anuluj</button>
+      </div>
+    </section>
+
+    <!-- Lista postów -->
+    <div class="posts-list" id="posts-list">
+      <div class="empty-state">Wczytywanie wpisów...</div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════════════
+   PANEL ADMIN
+══════════════════════════════════════════════════ */
+
+// !!! HASŁO – zmień na własne, prześlij Panu Leszkowi
+const ADMIN_PASSWORD = 'kania2026';
+
+const STORAGE_KEY = 'biuro-kania-news';
+const SESSION_KEY = 'biuro-kania-admin-session';
+
+// === LOGOWANIE ===
+const loginScreen = document.getElementById('login-screen');
+const adminPanel  = document.getElementById('admin-panel');
+const loginInput  = document.getElementById('login-password');
+const loginBtn    = document.getElementById('login-btn');
+const loginError  = document.getElementById('login-error');
+
+function checkSession() {
+  if (sessionStorage.getItem(SESSION_KEY) === 'ok') {
+    showPanel();
+  }
+}
+function showPanel() {
+  loginScreen.style.display = 'none';
+  adminPanel.style.display = 'block';
+  loadAndRenderPosts();
+}
+function login() {
+  const val = loginInput.value;
+  if (val === ADMIN_PASSWORD) {
+    sessionStorage.setItem(SESSION_KEY, 'ok');
+    loginError.textContent = '';
+    showPanel();
+  } else {
+    loginError.textContent = 'Nieprawidłowe hasło.';
+    loginError.style.color = 'var(--danger)';
+    loginInput.value = '';
+    loginInput.focus();
+  }
+}
+loginBtn.addEventListener('click', login);
+loginInput.addEventListener('keypress', e => { if (e.key === 'Enter') login(); });
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+});
+
+checkSession();
+
+// === DANE ===
+let posts = [];
+let editingId = null;
+
+async function loadPosts() {
+  const local = localStorage.getItem(STORAGE_KEY);
+  if (local) {
+    try {
+      const data = JSON.parse(local);
+      if (data.posts && Array.isArray(data.posts)) return data.posts;
+    } catch (e) {}
+  }
+  try {
+    const res = await fetch('news.json', { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      return data.posts || [];
+    }
+  } catch (e) {}
+  return [];
+}
+
+function savePosts() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ posts }));
+}
+
+async function loadAndRenderPosts() {
+  posts = await loadPosts();
+  renderPosts();
+}
+
+// === RENDER ===
+const list = document.getElementById('posts-list');
+
+function formatDatePL(iso) {
+  if (!iso) return '';
+  const months = ['stycznia','lutego','marca','kwietnia','maja','czerwca',
+                  'lipca','sierpnia','września','października','listopada','grudnia'];
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return iso;
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function renderPosts() {
+  if (!posts.length) {
+    list.innerHTML = '<div class="empty-state">Brak wpisów. Dodaj pierwszy klikając „+ Dodaj wpis".</div>';
+    return;
+  }
+  const sorted = [...posts].sort((a,b) =>
+    new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime()
+  );
+  list.innerHTML = sorted.map(p => `
+    <div class="post-item">
+      <div>
+        <div class="post-item-cat">${escapeHtml(p.category || '')}</div>
+        <div class="post-item-title">${escapeHtml(p.title || '(bez tytułu)')}</div>
+        <div class="post-item-meta">
+          <span>📅 ${formatDatePL(p.date)}</span>
+          <span>📝 ${(p.content || '').length} znaków</span>
+        </div>
+      </div>
+      <div class="post-actions">
+        <button class="btn btn-ghost btn-sm" data-action="edit" data-id="${p.id}">Edytuj</button>
+        <button class="btn btn-danger btn-sm" data-action="delete" data-id="${p.id}">Usuń</button>
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('[data-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      if (btn.dataset.action === 'edit') openForm(id);
+      else if (btn.dataset.action === 'delete') deletePost(id);
+    });
+  });
+}
+
+// === FORM ===
+const formSection = document.getElementById('form-section');
+const formTitle   = document.getElementById('form-title');
+const fCategory   = document.getElementById('post-category');
+const fTitle      = document.getElementById('post-title');
+const fDate       = document.getElementById('post-date');
+const fContent    = document.getElementById('post-content');
+
+document.getElementById('add-btn').addEventListener('click', () => openForm(null));
+document.getElementById('cancel-btn').addEventListener('click', closeForm);
+document.getElementById('save-btn').addEventListener('click', savePost);
+
+function openForm(id) {
+  editingId = id;
+  if (id) {
+    const p = posts.find(x => x.id === id);
+    if (!p) return;
+    formTitle.textContent = 'Edytuj wpis';
+    fCategory.value = p.category;
+    fTitle.value = p.title || '';
+    fDate.value = p.date || '';
+    fContent.value = p.content || '';
+  } else {
+    formTitle.textContent = 'Nowy wpis';
+    fCategory.value = 'Ciekawostka';
+    fTitle.value = '';
+    fDate.value = new Date().toISOString().slice(0, 10);
+    fContent.value = '';
+  }
+  formSection.classList.add('open');
+  formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => fTitle.focus(), 300);
+}
+
+function closeForm() {
+  formSection.classList.remove('open');
+  editingId = null;
+}
+
+function generateId(title) {
+  return (title || 'wpis')
+    .toLowerCase()
+    .replace(/[ąàá]/g, 'a').replace(/[ę]/g, 'e').replace(/[ćč]/g, 'c')
+    .replace(/[ł]/g, 'l').replace(/[ń]/g, 'n').replace(/[óòö]/g, 'o')
+    .replace(/[śš]/g, 's').replace(/[źż]/g, 'z')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60) + '-' + Date.now().toString(36);
+}
+
+function savePost() {
+  const title = fTitle.value.trim();
+  const date = fDate.value;
+  const content = fContent.value.trim();
+  const category = fCategory.value;
+
+  if (!title || !date || !content) {
+    toast('Wypełnij wszystkie pola obowiązkowe.', 'error');
+    return;
+  }
+
+  if (editingId) {
+    const idx = posts.findIndex(p => p.id === editingId);
+    if (idx >= 0) {
+      posts[idx] = { ...posts[idx], category, title, date, content };
+    }
+  } else {
+    posts.unshift({
+      id: generateId(title),
+      category, title, date, content
+    });
+  }
+
+  savePosts();
+  renderPosts();
+  closeForm();
+  toast('Zapisano wpis ✓', 'success');
+}
+
+function deletePost(id) {
+  const p = posts.find(x => x.id === id);
+  if (!p) return;
+  if (!confirm(`Czy na pewno usunąć wpis "${p.title}"?`)) return;
+  posts = posts.filter(x => x.id !== id);
+  savePosts();
+  renderPosts();
+  toast('Wpis usunięty.', 'success');
+}
+
+// === EXPORT / IMPORT ===
+document.getElementById('export-btn').addEventListener('click', () => {
+  const data = JSON.stringify({ posts }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'news.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Pobrano news.json ✓', 'success');
+});
+
+document.getElementById('import-btn').addEventListener('click', () => {
+  document.getElementById('import-file').click();
+});
+document.getElementById('import-file').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    if (!data.posts || !Array.isArray(data.posts)) {
+      throw new Error('Nieprawidłowy format pliku');
+    }
+    posts = data.posts;
+    savePosts();
+    renderPosts();
+    toast(`Wczytano ${posts.length} wpisów ✓`, 'success');
+  } catch (err) {
+    toast('Błąd: ' + err.message, 'error');
+  }
+  e.target.value = '';
+});
+
+// === HELPERS ===
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+const toastEl = document.getElementById('toast');
+let toastTimer;
+function toast(msg, type = '') {
+  toastEl.textContent = msg;
+  toastEl.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toastEl.classList.remove('show');
+  }, 3000);
+}
+</script>
+
+</body>
+</html>

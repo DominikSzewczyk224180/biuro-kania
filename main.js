@@ -74,7 +74,139 @@ document.addEventListener('DOMContentLoaded', () => {
       counterObs.unobserve(el);
     });
   }, { threshold: 0.6 });
-
   document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
 
+
+  /* ═══════════════════════════════════════════
+     AKTUALNOŚCI — ładowanie i wyświetlanie
+  ═══════════════════════════════════════════ */
+
+  const newsGrid = document.getElementById('news-grid');
+  const modal = document.getElementById('news-modal');
+  const modalBody = document.getElementById('news-modal-body');
+  const modalClose = document.getElementById('news-modal-close');
+
+  // Mapa kategorii → klasy CSS i etykiety
+  const categoryClass = (cat) => {
+    const c = cat.toLowerCase();
+    if (c.includes('ciekawost')) return 'news-category--ciekawostka';
+    if (c.includes('zmiana') || c.includes('przepis')) return 'news-category--zmiana';
+    if (c.includes('ogłosz') || c.includes('biur')) return 'news-category--ogloszenie';
+    return 'news-category--ciekawostka';
+  };
+
+  const formatDate = (iso) => {
+    if (!iso) return '';
+    const months = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca',
+                    'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return iso;
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  };
+
+  const truncate = (text, max = 180) => {
+    if (text.length <= max) return text;
+    const cut = text.slice(0, max);
+    const lastSpace = cut.lastIndexOf(' ');
+    return cut.slice(0, lastSpace > 0 ? lastSpace : max) + '…';
+  };
+
+  // Pobierz posty: najpierw localStorage (panel admina), fallback news.json
+  async function loadPosts() {
+    // Sprawdź localStorage - admin mógł lokalnie zmodyfikować
+    const localData = localStorage.getItem('biuro-kania-news');
+    if (localData) {
+      try {
+        const parsed = JSON.parse(localData);
+        if (parsed.posts && Array.isArray(parsed.posts)) return parsed.posts;
+      } catch (e) {
+        console.warn('Błąd parsowania lokalnych newsów:', e);
+      }
+    }
+
+    // Fallback: pobierz z news.json
+    try {
+      const res = await fetch('news.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('Nie można pobrać news.json');
+      const data = await res.json();
+      return data.posts || [];
+    } catch (e) {
+      console.warn('Błąd ładowania news.json:', e);
+      return [];
+    }
+  }
+
+  function renderPosts(posts) {
+    if (!posts || posts.length === 0) {
+      newsGrid.innerHTML = '<div class="news-empty">Brak aktualności do wyświetlenia.</div>';
+      return;
+    }
+
+    // Sortuj malejąco po dacie (najnowsze pierwsze)
+    const sorted = [...posts].sort((a, b) => {
+      const da = new Date(a.date || 0).getTime();
+      const db = new Date(b.date || 0).getTime();
+      return db - da;
+    });
+
+    newsGrid.innerHTML = sorted.map(post => `
+      <article class="news-card" data-id="${post.id}">
+        <span class="news-category ${categoryClass(post.category)}">${escapeHtml(post.category)}</span>
+        <h3 class="news-title">${escapeHtml(post.title)}</h3>
+        <p class="news-excerpt">${escapeHtml(truncate(post.content))}</p>
+        <div class="news-footer">
+          <span class="news-date">${formatDate(post.date)}</span>
+          <span class="news-readmore">Czytaj więcej →</span>
+        </div>
+      </article>
+    `).join('');
+
+    // Click handlery — otwórz modal
+    newsGrid.querySelectorAll('.news-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.id;
+        const post = sorted.find(p => p.id === id);
+        if (post) openModal(post);
+      });
+    });
+  }
+
+  function openModal(post) {
+    modalBody.innerHTML = `
+      <span class="news-category ${categoryClass(post.category)}">${escapeHtml(post.category)}</span>
+      <h2 class="news-title">${escapeHtml(post.title)}</h2>
+      <span class="news-date">${formatDate(post.date)}</span>
+      <div class="news-content">${escapeHtml(post.content)}</div>
+    `;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // Start
+  if (newsGrid) {
+    loadPosts().then(renderPosts);
+  }
 });

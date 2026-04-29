@@ -1,0 +1,25 @@
+{
+  "posts": [
+    {
+      "id": "ksef-kwiecien-2026",
+      "category": "Zmiana przepisów",
+      "title": "KSeF obowiązkowy dla wszystkich od 1 kwietnia 2026",
+      "date": "2026-04-01",
+      "content": "Od 1 kwietnia 2026 r. wszyscy czynni podatnicy VAT są zobowiązani do wystawiania faktur wyłącznie przez Krajowy System e-Faktur (KSeF). Tradycyjne faktury PDF i papierowe tracą moc dokumentu księgowego. Mikroprzedsiębiorcy o sprzedaży miesięcznej do 10 000 zł mogą skorzystać z odroczenia do końca 2026 r. Czas zwrotu VAT skrócono do 40 dni jako zachętę do cyfryzacji. Jeśli prowadzisz firmę i jeszcze nie wdrożyłeś KSeF — skontaktuj się z nami, pomożemy Ci się przygotować."
+    },
+    {
+      "id": "limit-vat-240",
+      "category": "Ciekawostka",
+      "title": "Wyższy limit zwolnienia z VAT — z 200 do 240 tys. zł",
+      "date": "2026-01-01",
+      "content": "Od 1 stycznia 2026 r. limit zwolnienia podmiotowego z VAT wzrósł ze 200 000 zł do 240 000 zł — to pierwsza podwyżka tego progu od 9 lat. Co istotne, jeśli w 2025 r. Twoja sprzedaż przekroczyła 200 000 zł, ale nie przekroczyła 240 000 zł, możesz nadal korzystać ze zwolnienia w 2026 r. dzięki przepisowi przejściowemu. Mała zmiana, a może oszczędzić sporo formalności."
+    },
+    {
+      "id": "amortyzacja-aut-2026",
+      "category": "Zmiana przepisów",
+      "title": "Nowe limity amortyzacji samochodów osobowych",
+      "date": "2026-01-01",
+      "content": "Od 2026 r. obowiązują nowe limity zaliczania wydatków na samochody osobowe do kosztów uzyskania przychodu: 225 000 zł dla aut elektrycznych i wodorowych, 150 000 zł dla pojazdów do 50 g CO₂/km, oraz 100 000 zł dla pozostałych — w tym klasycznych aut spalinowych. To znacząca obniżka względem poprzedniego limitu 150 000 zł, która wpłynie na opłacalność zakupu firmowych aut spalinowych."
+    }
+  ]
+}

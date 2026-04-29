@@ -17,6 +17,7 @@
   </a>
   <ul class="nav-links">
     <li><a href="#uslugi">Usługi</a></li>
+    <li><a href="#aktualnosci">Aktualności</a></li>
     <li><a href="#o-nas">O biurze</a></li>
     <li><a href="#kontakt">Kontakt</a></li>
   </ul>
@@ -29,7 +30,6 @@
     <div class="bottom-line"></div>
   </div>
 
-  <!-- LEWA: treść -->
   <div class="hero-content">
     <div class="hero-kidp-corner">
       <img src="kidp-logo.png" alt="Krajowa Izba Doradców Podatkowych" class="hero-kidp-logo" />
@@ -140,6 +140,18 @@
       </ul>
     </div>
 
+  </div>
+</section>
+
+<!-- ══════════════ AKTUALNOŚCI ══════════════ -->
+<section id="aktualnosci">
+  <div class="section-label"><span>Aktualności</span></div>
+  <h2>Ciekawostki i zmiany podatkowe</h2>
+  <p class="section-intro">Najnowsze informacje o zmianach przepisów, ciekawostkach księgowych i ogłoszeniach biura.</p>
+
+  <div class="news-grid" id="news-grid">
+    <!-- Posty są ładowane dynamicznie z news.json przez main.js -->
+    <div class="news-loading">Wczytywanie aktualności…</div>
   </div>
 </section>
 
@@ -261,6 +273,14 @@
     Doradca Podatkowy · KIDP nr 03478
   </div>
 </footer>
+
+<!-- ══════════════ MODAL DLA POSTÓW ══════════════ -->
+<div class="news-modal" id="news-modal">
+  <div class="news-modal-content">
+    <button class="news-modal-close" id="news-modal-close" aria-label="Zamknij">×</button>
+    <div class="news-modal-body" id="news-modal-body"></div>
+  </div>
+</div>
 
 <script src="main.js"></script>
 </body>
