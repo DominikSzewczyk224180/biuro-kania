@@ -487,6 +487,22 @@ footer strong { color: rgba(255,255,255,.46); }
   border-radius: 50%; animation: pulse 2.4s infinite;
 }
 
+/* Ukryty link do panelu admina – widoczny tylko po najechaniu */
+.footer-admin-link {
+  position: absolute;
+  right: 12px; bottom: 8px;
+  font-size: 1.2rem;
+  color: rgba(255,255,255,.08);
+  text-decoration: none;
+  padding: 4px 10px;
+  line-height: 1;
+  transition: color .25s;
+}
+.footer-admin-link:hover {
+  color: var(--gold);
+}
+footer { position: relative; }
+
 /* ── ANIMATIONS ─────────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
