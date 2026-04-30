@@ -139,10 +139,10 @@ h1 em { font-style: normal; color: var(--gold); }
 }
 
 .hero-since {
-  display: inline-flex; align-items: center; gap: 14px;
+  display: inline-flex; align-items: center; gap: 18px;
   padding: 14px 26px;
   border: 1px solid var(--line);
-  border-left: 3px solid var(--gold);
+  border-right: 3px solid var(--gold);
   margin-bottom: 52px;
 }
 .hero-since .year {
@@ -200,7 +200,7 @@ h2 {
 }
 .section-intro {
   font-size: 1.02rem; color: var(--muted);
-  line-height: 1.8; max-width: 580px; margin-bottom: 56px;
+  line-height: 1.8; max-width: 760px; margin-bottom: 56px;
 }
 
 /* ── SERVICES ───────────────────────────────── */
@@ -311,6 +311,8 @@ h2 {
   font-size: .92rem; color: var(--muted);
   line-height: 1.7; margin-bottom: 18px;
   flex: 1;
+  text-align: justify;
+  hyphens: auto;
 }
 
 .news-footer {
@@ -380,6 +382,8 @@ h2 {
   font-size: 1rem; color: var(--text);
   line-height: 1.85;
   white-space: pre-wrap;
+  text-align: justify;
+  hyphens: auto;
 }
 
 @keyframes fadeIn {
