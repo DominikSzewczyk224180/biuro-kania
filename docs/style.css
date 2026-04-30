@@ -142,7 +142,7 @@ h1 em { font-style: normal; color: var(--gold); }
   display: inline-flex; align-items: center; gap: 18px;
   padding: 14px 26px;
   border: 1px solid var(--line);
-  border-right: 3px solid var(--gold);
+  border-left: 3px solid var(--gold);
   margin-bottom: 52px;
 }
 .hero-since .year {
