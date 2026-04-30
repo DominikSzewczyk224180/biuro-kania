@@ -2,9 +2,8 @@
    Biuro Rachunkowe Dagmara Kania — main.js
 ═══════════════════════════════════════════════ */
 
-// ⚠️ ZMIEŃ na URL Railway po deployu (np. https://biuro-kania-api.up.railway.app)
-// Po migracji na seohost zmień na https://api.biuro-kania.pl
-const API_URL = 'https://CHANGE-ME.up.railway.app';
+// Backend hostowany na seohost pod subdomeną api.biuro-kania.pl
+const API_URL = 'https://api.biuro-kania.pl';
 
 document.addEventListener('DOMContentLoaded', () => {
 
