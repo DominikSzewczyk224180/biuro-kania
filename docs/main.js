@@ -2,6 +2,10 @@
    Biuro Rachunkowe Dagmara Kania — main.js
 ═══════════════════════════════════════════════ */
 
+// ⚠️ ZMIEŃ na URL Railway po deployu (np. https://biuro-kania-api.up.railway.app)
+// Po migracji na seohost zmień na https://api.biuro-kania.pl
+const API_URL = 'https://CHANGE-ME.up.railway.app';
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Nawigacja: cień po przewinięciu ───────── */
@@ -78,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ═══════════════════════════════════════════
-     AKTUALNOŚCI — ładowanie i wyświetlanie
+     AKTUALNOŚCI — pobieranie z API
   ═══════════════════════════════════════════ */
 
   const newsGrid = document.getElementById('news-grid');
@@ -86,9 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalBody = document.getElementById('news-modal-body');
   const modalClose = document.getElementById('news-modal-close');
 
-  // Mapa kategorii → klasy CSS i etykiety
   const categoryClass = (cat) => {
-    const c = cat.toLowerCase();
+    const c = (cat || '').toLowerCase();
     if (c.includes('ciekawost')) return 'news-category--ciekawostka';
     if (c.includes('zmiana') || c.includes('przepis')) return 'news-category--zmiana';
     if (c.includes('ogłosz') || c.includes('biur')) return 'news-category--ogloszenie';
@@ -105,49 +108,42 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const truncate = (text, max = 180) => {
-    if (text.length <= max) return text;
+    if (!text || text.length <= max) return text || '';
     const cut = text.slice(0, max);
     const lastSpace = cut.lastIndexOf(' ');
     return cut.slice(0, lastSpace > 0 ? lastSpace : max) + '…';
   };
 
-  // Pobierz posty: najpierw localStorage (panel admina), fallback news.json
   async function loadPosts() {
-    // Sprawdź localStorage - admin mógł lokalnie zmodyfikować
-    const localData = localStorage.getItem('biuro-kania-news');
-    if (localData) {
-      try {
-        const parsed = JSON.parse(localData);
-        if (parsed.posts && Array.isArray(parsed.posts)) return parsed.posts;
-      } catch (e) {
-        console.warn('Błąd parsowania lokalnych newsów:', e);
-      }
-    }
-
-    // Fallback: pobierz z news.json
     try {
-      const res = await fetch('news.json', { cache: 'no-store' });
-      if (!res.ok) throw new Error('Nie można pobrać news.json');
+      const res = await fetch(`${API_URL}/news`, { cache: 'no-store' });
+      if (!res.ok) throw new Error('API error: ' + res.status);
       const data = await res.json();
       return data.posts || [];
     } catch (e) {
-      console.warn('Błąd ładowania news.json:', e);
+      console.warn('Błąd ładowania aktualności:', e);
+      // Fallback do news.json jeśli API nie odpowiada
+      try {
+        const fallback = await fetch('news.json', { cache: 'no-store' });
+        if (fallback.ok) {
+          const data = await fallback.json();
+          return data.posts || [];
+        }
+      } catch (_) {}
       return [];
     }
   }
 
   function renderPosts(posts) {
+    if (!newsGrid) return;
     if (!posts || posts.length === 0) {
       newsGrid.innerHTML = '<div class="news-empty">Brak aktualności do wyświetlenia.</div>';
       return;
     }
 
-    // Sortuj malejąco po dacie (najnowsze pierwsze)
-    const sorted = [...posts].sort((a, b) => {
-      const da = new Date(a.date || 0).getTime();
-      const db = new Date(b.date || 0).getTime();
-      return db - da;
-    });
+    const sorted = [...posts].sort((a, b) =>
+      new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime()
+    );
 
     newsGrid.innerHTML = sorted.map(post => `
       <article class="news-card" data-id="${post.id}">
@@ -161,11 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
       </article>
     `).join('');
 
-    // Click handlery — otwórz modal
     newsGrid.querySelectorAll('.news-card').forEach(card => {
       card.addEventListener('click', () => {
-        const id = card.dataset.id;
-        const post = sorted.find(p => p.id === id);
+        const post = sorted.find(p => p.id === card.dataset.id);
         if (post) openModal(post);
       });
     });
@@ -187,25 +181,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   }
 
-  modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    if (e.key === 'Escape' && modal && modal.classList.contains('open')) closeModal();
   });
 
   function escapeHtml(s) {
     if (s == null) return '';
     return String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
-  // Start
   if (newsGrid) {
     loadPosts().then(renderPosts);
   }
