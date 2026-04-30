@@ -4,7 +4,7 @@
 
 // ⚠️ ZMIEŃ na URL Railway po deployu (np. https://biuro-kania-api.up.railway.app)
 // Po migracji na seohost zmień na https://api.biuro-kania.pl
-const API_URL = 'https://CHANGE-ME.up.railway.app';
+const API_URL = 'https://biuro-kania-production.up.railway.app';
 
 document.addEventListener('DOMContentLoaded', () => {
 
